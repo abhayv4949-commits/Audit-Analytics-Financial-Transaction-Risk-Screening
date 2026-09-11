@@ -143,6 +143,3 @@ Built natively in Databricks Dashboards (Lakeview), connected directly to the Go
 - Benford's Law returned no aggregate flag; segmenting by account or user is a known, documented next step that would likely surface the injected anomalies more precisely.
 - USAspending's date filter is based on latest action date, not original award date, which affects population scoping.
 
-## Resume Bullet
-
-> Built an audit analytics pipeline using Databricks, PySpark, SQL, and Delta Lake to analyze real U.S. federal contract data (9,769 records, $12.66B) and synthetic ERP transaction data (60,000+ records); developed six risk-screening tests spanning vendor concentration, duplicate payment detection, fiscal year-end timing analysis, Benford's Law, segregation-of-duties conflicts, and three-way match exceptions; surfaced findings including a single vendor representing 21.6% of total spend and a 382-record billing exception pattern; presented results via an interactive Databricks dashboard.
