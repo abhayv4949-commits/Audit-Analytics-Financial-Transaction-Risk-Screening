@@ -12,23 +12,13 @@ The project has two modules:
 
 ## Architecture
 
-```
-                         DATA SOURCES
-                              |
-                 +------------+------------+
-                 |                         |
-          USAspending API            Synthetic ERP
-          (Python + requests)        (Python + Faker)
-                 |                         |
-                 +------------+------------+
-                              v
-                         BRONZE (raw, untouched)
-                              v
-                         SILVER (cleaned, normalized)
-                              v
-                     GOLD (audit tests, PySpark + SQL)
-                              v
-                    DATABRICKS DASHBOARD (Lakeview)
+```mermaid
+flowchart TD
+    A[USAspending API<br/>Python + requests] --> C[BRONZE<br/>raw, untouched]
+    B[Synthetic ERP<br/>Python + Faker] --> C
+    C --> D[SILVER<br/>cleaned, normalized]
+    D --> E[GOLD<br/>audit tests, PySpark + SQL]
+    E --> F[Databricks Dashboard<br/>Lakeview]
 ```
 
 **Tools used:** Databricks (Community Edition), PySpark, Python, SQL, Delta Lake, Databricks Dashboards (Lakeview).
@@ -52,6 +42,8 @@ The project has two modules:
 **Result:** The top 5% of recipients (117 vendors) account for **78.5%** of total spend ($12.66B). A single recipient, **Vectrus Systems**, accounts for **21.6%** of total spend across only 11 awards.
 
 **Interpretation:** This level of concentration — particularly the single-vendor share — warrants investigation into whether it reflects legitimate sole-source arrangements or a control gap in vendor diversification. This finding does not itself establish improper conduct.
+
+![Top 10 vendors by total spend](Top%2010%20Vendors%20by%20Total%20Spend.png)
 
 ### Test 2 — Duplicate / Near-Duplicate Payment Detection
 
@@ -118,6 +110,16 @@ Built natively in Databricks Dashboards (Lakeview), connected directly to the Go
 4. **Monthly Spending** — visualizes the September timing spike
 5. **Flagged Duplicate / Near-Duplicate Payments** — detail table of specific candidate records
 
+![Executive summary](Executive%20Summary.png)
+
+![Spending trend over time](Spending%20Trend%20Over%20Time.png)
+
+![Risk findings by category](Risk%20Findings%20by%20Category.png)
+
+![Monthly spending, September spike](Monthly%20Spending%20%E2%80%94%20Note%20the%20September%20Spike.png)
+
+![Flagged duplicate and near-duplicate payments](Flagged%20Duplicate%20_%20Near-Duplicate%20Payments.png)
+
 ## Key Insights Summary
 
 | Finding | Number |
@@ -141,4 +143,6 @@ Built natively in Databricks Dashboards (Lakeview), connected directly to the Go
 - Benford's Law returned no aggregate flag; segmenting by account or user is a known, documented next step that would likely surface the injected anomalies more precisely.
 - USAspending's date filter is based on latest action date, not original award date, which affects population scoping.
 
+## Resume Bullet
 
+> Built an audit analytics pipeline using Databricks, PySpark, SQL, and Delta Lake to analyze real U.S. federal contract data (9,769 records, $12.66B) and synthetic ERP transaction data (60,000+ records); developed six risk-screening tests spanning vendor concentration, duplicate payment detection, fiscal year-end timing analysis, Benford's Law, segregation-of-duties conflicts, and three-way match exceptions; surfaced findings including a single vendor representing 21.6% of total spend and a 382-record billing exception pattern; presented results via an interactive Databricks dashboard.
