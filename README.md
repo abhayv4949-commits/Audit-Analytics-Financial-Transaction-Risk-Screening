@@ -1,5 +1,8 @@
 # Audit Analytics & Financial Transaction Risk Screening Platform
 
+> **Built entirely on Databricks** using **PySpark, Python, SQL, Delta Lake, and Databricks Dashboards (Lakeview)**
+
+
 ## Overview
 
 This project simulates the kind of data analytics work performed by an audit analytics team: taking a large transaction population, running systematic risk-screening tests, and surfacing findings that help prioritize where human auditors should focus their attention.
